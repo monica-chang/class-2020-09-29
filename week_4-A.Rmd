@@ -61,7 +61,7 @@ d_2019_take_2 <- read_enrollment(file = "raw_data/class_enrollment_summary_by_te
 
 Arrg! Depending in how you wrote `read_enrollment()`, you will probably be getting an error, for at least some of the years.  How annoying that Harvard changes the format! Make your function flexible enough to deal with all these files. Hint: You need to add at least one argument in addition to `file` so that you can change the behavior of the function when you call it. Give that new argument a sensible default.
 
-```{r sc2}
+```{r sc3}
 
 d_2019_take_2 <- read_enrollment(file = "raw_data/class_enrollment_summary_by_term_12.20.19.xlsx")
 
@@ -79,7 +79,11 @@ d_2015 <- read_enrollment(file = "raw_data/class_enrollment_summary_by_term_fall
 
 **Prompt:** Combine the five tibbles which you have into a single tibble which can then be used for analysis and graphics. There are many ways to do this, but we recommend `bind_rows()`. Hint: make use of the `.id` argument, which may be aided by placing the tibbles in a list.
 
+```{r sc4}
 
+bind_rows(list(d_2019_take_2, d_2018, d_2017, d_2016, d_2015), .id = "year")
+
+```
 
 ### Scene 5
 
