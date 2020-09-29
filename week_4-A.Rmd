@@ -81,13 +81,29 @@ d_2015 <- read_enrollment(file = "raw_data/class_enrollment_summary_by_term_fall
 
 ```{r sc4}
 
-bind_rows(list(d_2019_take_2, d_2018, d_2017, d_2016, d_2015), .id = "year")
-
+bind_rows(list(d_2019_take_2, d_2018, d_2017, d_2016, d_2015), .id = "year") %>%
+  mutate(year = as.numeric(year) + 2014)
 ```
 
 ### Scene 5
 
 **Prompt:** Make an interesting plot with this data. Take that plot and publish it on Rpubs. Add a link to the Rpubs in the #general Slack channel.
 
+```{r sc5}
 
+bind_rows(list(d_2019_take_2, d_2018, d_2017, d_2016, d_2015), .id = "year") %>%
+  mutate(year = as.numeric(year) + 2014) %>%
+  filter(department == "Economics" | department == "Government" | 
+         department == "Computer Science") %>%
+  group_by(department, year) %>%
+  summarize(students_in_dept = sum(u_grad), .groups = "drop") %>%
+  ggplot(aes(x = year, y = students_in_dept, group = department, color = department)) + 
+    geom_line() +
+    theme_bw() +
+    labs(
+      title = "Increase/Decrease in Econ, CS, and Gov Enrollment from 2015-2019",
+      x = "Year",
+      y = "Students Enrolled in the Department")
+
+```
 
